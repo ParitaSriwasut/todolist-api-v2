@@ -1,19 +1,19 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import chalk from 'chalk';
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import chalk from "chalk";
 
-import todoRoute from './routes/todo.js';
-import authRoute from './routes/auth.js';
-import notFoundMiddleware from './middlewares/not-found.js';
-import errorMiddleware from './middlewares/error.js';
+import todoRoute from "./routes/todo.js";
+import authRoute from "./routes/auth.js";
+import notFoundMiddleware from "./middlewares/not-found.js";
+import errorMiddleware from "./middlewares/error.js";
 
 const app = express();
 
-if (process.env.MODE === 'development') {
-  app.use(morgan('dev'));
+if (process.env.MODE === "development") {
+  app.use(morgan("dev"));
 }
 
 app.use(cors());
@@ -21,11 +21,13 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/auth', authRoute);
-app.use('api/todos', todoRoute);
+app.use("/auth", authRoute);
+app.use("/api/todos", todoRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(chalk.blueBright(`server running on port ${port}`)));
+app.listen(port, () =>
+  console.log(chalk.blueBright(`server running on port ${port}`))
+);
